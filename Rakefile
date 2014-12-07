@@ -5,7 +5,7 @@ end
 
 desc '説明書'
 task help: [] do
-  sh 'rake -T'
+  sh 'bundle exec rake -T'
 end
 
 desc 'テスト用手元実行'
