@@ -8,6 +8,11 @@ task help: [] do
   sh 'rake -T'
 end
 
+desc '実行'
+task r: [] do
+  sh 'bundle exec ruby main.rb'
+end
+
 namespace :setup do
 
   desc 'init setup'
