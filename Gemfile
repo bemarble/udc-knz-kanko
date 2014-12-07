@@ -1,13 +1,16 @@
 source "https://rubygems.org"
 ruby '2.1.4'
- 
+
 gem 'sinatra'
 gem 'unicorn'
- 
+
+gem 'omniauth-facebook'
+
+
 # ActiveRecord
 gem 'sinatra-activerecord'
 gem 'activerecord'
- 
+
 group :development, :test do
   gem 'rake'
   gem 'sinatra-contrib'
