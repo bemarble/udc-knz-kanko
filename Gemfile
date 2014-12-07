@@ -4,6 +4,7 @@ ruby '2.1.4'
 gem 'sinatra'
 gem 'haml'
 gem 'unicorn'
+gem 'heroku'
 
 # ActiveRecord
 gem 'sinatra-activerecord'
