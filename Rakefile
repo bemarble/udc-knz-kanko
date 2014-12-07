@@ -8,9 +8,9 @@ task help: [] do
   sh 'rake -T'
 end
 
-desc '実行'
-task r: [] do
-  sh 'bundle exec ruby main.rb'
+desc 'テスト用手元実行'
+task f: [] do
+  sh 'foreman start'
 end
 
 namespace :setup do
