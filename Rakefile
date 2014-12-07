@@ -15,6 +15,11 @@ namespace :setup do
     sh 'bundle install --path vendor/bundle'
   end
 
+  desc 'bundle install'
+  task bundle: [] do
+    sh 'bundle install --path vendor/bundle'
+  end
+
   task print_git_remote: [] do
     puts '以下の設定でやることをオススメ'
     puts 'git remote set-url origin git@github.com:bemarble/udc-knz-kanko.git'
