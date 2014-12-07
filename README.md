@@ -15,3 +15,5 @@ udc-knz-kanko
 2. create database. see `sql/create_database.sql`
 3. add user. see `sql create_user.sql`
 4. test connection `mysql -u udc-knz-kanko -p<password> udc_knz_kanko`
+5. edit `config/database.rb`
+6. migrate database `bundle exec rake -f Rakefile.db db:migrate`
