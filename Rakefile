@@ -5,12 +5,12 @@ end
 
 desc '説明書'
 task help: [] do
-  sh 'rake -T'
+  sh 'bundle exec rake -T'
 end
 
-desc '実行'
-task r: [] do
-  sh 'bundle exec ruby main.rb'
+desc 'テスト用手元実行'
+task f: [] do
+  sh 'foreman start'
 end
 
 namespace :setup do
