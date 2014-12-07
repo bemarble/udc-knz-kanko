@@ -14,6 +14,15 @@ class App < Sinatra::Base
         # 座標を読み込むAPI
         erb :geo
     end
+    get '/login/' do
+      
+      erb :login
+    end
+    get '/tw_login/' do
+
+      # twitter login
+      erb :tw_login
+    end
 
     get '/:path' do
 	      path = params[:path]
