@@ -28,6 +28,8 @@ GEM
     kgio (2.9.2)
     minitest (5.4.3)
     multi_json (1.10.1)
+    mysql (2.9.1)
+    mysql2 (0.3.17)
     rack (1.5.2)
     rack-protection (1.5.3)
       rack
@@ -66,6 +68,8 @@ DEPENDENCIES
   activerecord
   foreman
   haml
+  mysql
+  mysql2
   rake
   sinatra
   sinatra-activerecord
