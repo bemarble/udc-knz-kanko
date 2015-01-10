@@ -1,6 +1,24 @@
+<div id="fullscreen_bg" class="fullscreen_bg"/>
 
-<a href="login">twでログイン</a>
-<a href="login">fbでログイン</a>
-<a href="/place/">マップへ</a>
+<div class="container">
 
-<img src="<% @image %>" />
+  <form class="form-signin">
+
+    <h1 class="form-signin-heading text-muted">Sign In</h1>
+
+    <a href="/facebook" class="btn btn-lg btn-facebook btn-block">facebookでログイン</a>
+
+    <a href="/twitter" class="btn btn-lg btn-twitter btn-block">twitterでログイン</a>
+
+    <a href="/place/" class="btn btn-lg btn-primary btn-block">マップへ</a>
+    <hr/>
+    <center><h4>OR</h4></center>
+
+    <input type="text" class="form-control" placeholder="Email address" required="" autofocus="">
+    <input type="password" class="form-control" placeholder="Password" required="">
+    <button class="btn btn-lg btn-primary btn-block" type="submit">
+      Sign In
+    </button>
+  </form>
+
+</div>

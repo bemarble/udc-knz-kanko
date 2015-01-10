@@ -5,7 +5,7 @@ gem 'sinatra'
 gem 'unicorn'
 
 gem 'omniauth-facebook'
-
+gem 'omniauth-twitter'
 
 # ActiveRecord
 gem 'sinatra-activerecord'
