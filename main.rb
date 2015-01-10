@@ -3,6 +3,8 @@ require 'sinatra'
 require 'sinatra/base'
 require 'active_record'
 
+require './model.rb'
+
 ActiveRecord::Base.configurations = YAML.load_file('config/database.yml')
 ActiveRecord::Base.establish_connection('development')
 
