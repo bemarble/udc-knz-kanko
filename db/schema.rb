@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141207073034) do
+ActiveRecord::Schema.define(version: 20150110122652) do
 
   create_table "opendatas", force: true do |t|
     t.string   "name"
@@ -22,12 +22,8 @@ ActiveRecord::Schema.define(version: 20141207073034) do
   create_table "users", force: true do |t|
     t.string   "name"
     t.datetime "created_at"
-    t.datetime "updated_at"
     t.string   "twitter"
     t.string   "facebook"
-    t.string   "none"
-    t.string   "want2go"
-    t.integer  "helpme"
   end
 
 end
