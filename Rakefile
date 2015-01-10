@@ -3,7 +3,10 @@
 # import sinatra-rake
 require 'sinatra/activerecord/rake'
 
-require_relative 'config/database.rb'
+# import database_config
+require './app.rb'
+
+require_relative 'Rakefile.my'
 
 task default: [:help] do
 end
