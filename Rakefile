@@ -1,34 +1,17 @@
 # coding: utf-8
 
+# import sinatra-rake
+require 'sinatra/activerecord/rake'
+
+# import database_config
+require './app.rb'
+
+require_relative 'Rakefile.my'
+
 task default: [:help] do
 end
 
 desc '説明書'
 task help: [] do
-  sh 'bundle exec rake -T'
-end
-
-desc 'テスト用手元実行'
-task f: [] do
-  sh 'foreman start'
-end
-
-namespace :setup do
-
-  desc 'init setup'
-  task init: [] do
-    sh 'bundle install --path vendor/bundle'
-  end
-
-  desc 'bundle install'
-  task bundle: [] do
-    sh 'bundle install --path vendor/bundle'
-  end
-
-  task print_git_remote: [] do
-    puts '以下の設定でやることをオススメ'
-    puts 'git remote set-url origin git@github.com:bemarble/udc-knz-kanko.git'
-    puts 'git remote add heroku  git@heroku.com:udc-knz-kanko.git'
-  end
-
+  sh 'bundle exec rake -f Rakefile.db -T'
 end
