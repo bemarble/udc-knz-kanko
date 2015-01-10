@@ -2,7 +2,7 @@
 require 'sinatra'
 require 'sinatra/base'
 require 'sinatra/reloader' if development?
-
+require 'active_record'
 require './model.rb'
 
 class User < ActiveRecord::Base
