@@ -1,1 +1,1 @@
-create database udc-knz-kanko character set utf8;
+create database udc_knz_kanko character set utf8;
