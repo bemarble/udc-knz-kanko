@@ -1,5 +1,6 @@
 require 'json'
 require 'httpclient'
+# require './models/opendata.rb'
 
 class Opendata
 
@@ -11,18 +12,37 @@ class Opendata
   #
   tmp_data = hClient.get_content(endpoint_uri, "content-type" => "text/csv")
   # tmp_data = tmp_data.force_encoding('UTF-8')
-  tmp_data.encode("UTF-16BE", "UTF-8",
-    invalid: :replace,
-    undef: :replace,
-    replace: '.').encode("UTF-8")
+  # tmp_data.encode("UTF-16BE", "UTF-8",
+  #   invalid: :replace,
+  #   undef: :replace,
+  #   replace: '.').encode("UTF-8")
+
+  # tmp_data.encode("UTF-8")
 
   # 改行
   csv_data = tmp_data.split("\n")
-  # i=0
+  # connection = Mysql::connect("localhost", "udc-kana", "udc-kana", "udc-kana")
+  # connection.query("set character set utf8")
+  # rs = connection.query("SELECT * FROM users")
+  #
+  # rs.each do |r|
+  #   puts r.join ", "
+  # end
+  #
+  # connection.close
+
   for row in csv_data do
     # i = i+1
     # puts i
     # puts row
+    row_data = row.split("\t")
+    for clm in row_data do
+      # puts clm
+      puts clm.encode("UTF-16BE", "UTF-8",
+        invalid: :replace,
+        undef: :replace,
+        replace: '.').encode("UTF-8")
+    end
   end
 
 end

@@ -1,4 +1,7 @@
 # coding: utf-8
+require 'sinatra/activerecord'
+require 'sinatra/activerecord/rake'
+require './models/opendata.rb'
 
 task default: [:help] do
 end
