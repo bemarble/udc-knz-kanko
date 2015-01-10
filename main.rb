@@ -94,7 +94,13 @@ class App < Sinatra::Base
         end
 
         users.save
+
+        row = User.find_by_sql(['SELECT LAST_INSERT_ID() AS id'])
+
       end
+
+      # IDを取得
+      session[:id] = row[:id]
 
       redirect '/'
     end
@@ -106,8 +112,9 @@ class App < Sinatra::Base
 		end
 
     get '/place/' do
-
       @css.push "/css/map.css"
+
+      p session[:id]
       erb :place
     end
 
