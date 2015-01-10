@@ -7,9 +7,15 @@ gem 'unicorn'
 gem 'omniauth-facebook'
 gem 'omniauth-twitter'
 
+gem 'heroku'
+
 # ActiveRecord
 gem 'sinatra-activerecord'
 gem 'activerecord'
+
+# MySQL
+gem 'mysql2'
+gem 'mysql'
 
 group :development, :test do
   gem 'rake'

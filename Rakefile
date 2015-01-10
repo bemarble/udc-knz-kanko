@@ -1,18 +1,17 @@
 # coding: utf-8
 
+# import sinatra-rake
+require 'sinatra/activerecord/rake'
+
+# import database_config
+require './app.rb'
+
+require_relative 'Rakefile.my'
+
 task default: [:help] do
 end
 
 desc '説明書'
 task help: [] do
-  sh 'rake -T'
-end
-
-namespace :setup do
-
-  desc 'init setup'
-  task init: [] do
-    sh 'bundle install --path vendor/bundle'
-  end
-
+  sh 'bundle exec rake -f Rakefile.db -T'
 end

@@ -1,6 +1,12 @@
+# coding: utf-8
 require 'sinatra'
 require 'sinatra/base'
 require 'sinatra/reloader' if development?
+require 'active_record'
+require './model.rb'
+
+class User < ActiveRecord::Base
+end
 
 require 'omniauth'
 require 'omniauth-facebook'
@@ -75,9 +81,19 @@ class App < Sinatra::Base
         erb :place
     end
 
+    get '/db_test/' do
+      v = User.first
+      "#{v.name} / #{v.twitter} / #{v.facebook}"
+      # "Hello #{User.count} users!"
+    end
+
     get '/geo/' do
         # 座標を読み込むAPI
         erb :geo, :layout => false
+    end
+
+    get '/login/' do
+      erb :login
     end
 
     get '/my' do
