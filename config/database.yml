@@ -1,6 +1,5 @@
 production:
   adapter: mysql2
-  host: localhost
   encoding: utf8
 development:
   adapter: mysql2
