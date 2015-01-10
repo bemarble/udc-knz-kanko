@@ -46,6 +46,10 @@ class App < Sinatra::Base
       provider :twitter, ENV['TW_APP_ID'], ENV['TW_APP_SECRET']
     end
 
+    before do
+      @css = ["/css/bootstrap.min.css", "/css/main.css"]
+    end
+
     get '/facebook' do
       if session[:facebook] == nil
         redirect '/auth/facebook'
@@ -91,7 +95,7 @@ class App < Sinatra::Base
 
         users.save
       end
-      
+
       redirect '/'
     end
 
@@ -102,9 +106,9 @@ class App < Sinatra::Base
 		end
 
     get '/place/' do
-        p "testtesttest"
-        p session[:user_name]
-        erb :place
+
+      @css.push "/css/map.css"
+      erb :place
     end
 
     get '/db_test/' do

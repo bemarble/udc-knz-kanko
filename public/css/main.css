@@ -12,8 +12,6 @@ body { height: 100% }
 TOP
 */
 body {
-  padding-top: 40px;
-  padding-bottom: 40px;
   background-color: #eee;
 }
 .fullscreen_bg {
@@ -24,8 +22,9 @@ body {
   left: 0;
   background-size: cover;
   background-position: 50% 50%;
-  background-image: url('http://31.media.tumblr.com/ad65726441493f47e0c8f0473206f4e5/tumblr_mvwl4fCEb21rdpk23o1_1280.jpg');
+  background-image: url('/img/bg-kanazawa.jpg');
 }
+
 .form-signin {
   max-width: 280px;
   padding: 15px;
@@ -118,7 +117,7 @@ body {
   color: #ffffff;
   -webkit-text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
-  background-color: #2b4b90;
+  background-color: #56ABED;
   *background-color: #56ABED;
   background-image: -moz-linear-gradient(top, #55ACEE, #56ABED);
   background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#55ACEE), to(#56ABED));
