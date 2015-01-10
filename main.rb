@@ -145,6 +145,14 @@ class App < Sinatra::Base
     end
 
     post '/register_state' do
+      message = @params[:message]
+
+      posts = Posts.new
+
+#      posts.user_id = session[:id]
+#      posts.message = message
+
+#      posts.save
 
     end
 end
