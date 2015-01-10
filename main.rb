@@ -113,8 +113,6 @@ class App < Sinatra::Base
 
     get '/place/' do
       @css.push "/css/map.css"
-
-      p session[:id]
       erb :place
     end
 
@@ -144,5 +142,9 @@ class App < Sinatra::Base
     get '/:path' do
 	      path = params[:path]
 		    erb path.intern
+    end
+
+    post '/register_state' do
+
     end
 end
