@@ -1,9 +1,5 @@
 production:
   adapter: mysql2
-  database: udc_knz_kanko
-  host: localhost
-  username: udc-knz-kanko
-  password: udc-knz-kanko
   encoding: utf8
 development:
   adapter: mysql2
