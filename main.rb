@@ -26,19 +26,21 @@ class App < Sinatra::Base
     use OmniAuth::Builder do
       SCOPE = 'email,read_stream'
 
-      # develop
-      ENV['FB_APP_ID'] = "826355644069906"
-      ENV['FB_APP_SECRET'] = "64495b9647fa2d8a4e8aa6843ec7b803"
+      if request.host == "udc-knz-kanko.herokuapp.com" then
+        # production
+        ENV['FB_APP_ID'] = "806086352763502"
+        ENV['FB_APP_SECRET'] = "e2941a79f5beeab87d81abb9a2489996"
 
-      ENV['TW_APP_ID'] = "6RqWrX89FG44iHML0ci2eL6g3"
-      ENV['TW_APP_SECRET'] = "MR5OuYN6nFRXOeDfQa8e9ITYNfEjW32erNvRpKalsJMi1TroR0"
+        ENV['TW_APP_ID'] = "d8fhQkymOTmCYnpasZvOM1qbq"
+        ENV['TW_APP_SECRET'] = "tBwlj2YVQFk4nQPrCwMgHt5ffKPelhOdZRPDrMYZL7msBfZZsc"
+      else
+        # develop
+        ENV['FB_APP_ID'] = "826355644069906"
+        ENV['FB_APP_SECRET'] = "64495b9647fa2d8a4e8aa6843ec7b803"
 
-      # production
-      #ENV['FB_APP_ID'] = "806086352763502"
-      #ENV['FB_APP_SECRET'] = "e2941a79f5beeab87d81abb9a2489996"
-
-      #ENV['TW_APP_ID'] = "d8fhQkymOTmCYnpasZvOM1qbq"
-      #ENV['TW_APP_SECRET'] = "tBwlj2YVQFk4nQPrCwMgHt5ffKPelhOdZRPDrMYZL7msBfZZsc"
+        ENV['TW_APP_ID'] = "6RqWrX89FG44iHML0ci2eL6g3"
+        ENV['TW_APP_SECRET'] = "MR5OuYN6nFRXOeDfQa8e9ITYNfEjW32erNvRpKalsJMi1TroR0"
+      end
 
 
       provider :facebook, ENV['FB_APP_ID'],ENV['FB_APP_SECRET'], :scope => SCOPE
@@ -107,7 +109,6 @@ class App < Sinatra::Base
 
 
     get '/' do
-
 		    erb :index
 		end
 
