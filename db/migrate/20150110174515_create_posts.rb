@@ -3,9 +3,7 @@ class CreatePosts < ActiveRecord::Migration
     create_table :posts do |t|
       t.integer :user_id
       t.text :message
-      t.datetime :created_at
-      t.timestamp :updated_at
-
+      t.timestamps
     end
   end
 end
