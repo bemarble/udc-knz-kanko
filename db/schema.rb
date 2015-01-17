@@ -11,10 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150110122652) do
+ActiveRecord::Schema.define(version: 20150110174515) do
 
   create_table "opendatas", force: true do |t|
     t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "posts", force: true do |t|
+    t.integer  "user_id"
+    t.text     "message"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -24,6 +31,10 @@ ActiveRecord::Schema.define(version: 20150110122652) do
     t.datetime "created_at"
     t.string   "twitter"
     t.string   "facebook"
+    t.datetime "updated_at"
   end
+
+  add_index "users", ["facebook"], name: "index_users_on_facebook", using: :btree
+  add_index "users", ["twitter"], name: "index_users_on_twitter", using: :btree
 
 end

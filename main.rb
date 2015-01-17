@@ -25,14 +25,29 @@ class App < Sinatra::Base
 
     use OmniAuth::Builder do
       SCOPE = 'email,read_stream'
-      ENV['FB_APP_ID'] = "806086352763502"
-      ENV['FB_APP_SECRET'] = "e2941a79f5beeab87d81abb9a2489996"
 
-      ENV['TW_APP_ID'] = "d8fhQkymOTmCYnpasZvOM1qbq"
-      ENV['TW_APP_SECRET'] = "tBwlj2YVQFk4nQPrCwMgHt5ffKPelhOdZRPDrMYZL7msBfZZsc"
+      # develop
+      ENV['FB_APP_ID'] = "826355644069906"
+      ENV['FB_APP_SECRET'] = "64495b9647fa2d8a4e8aa6843ec7b803"
+
+      ENV['TW_APP_ID'] = "6RqWrX89FG44iHML0ci2eL6g3"
+      ENV['TW_APP_SECRET'] = "MR5OuYN6nFRXOeDfQa8e9ITYNfEjW32erNvRpKalsJMi1TroR0"
+
+      # production
+      #ENV['FB_APP_ID'] = "806086352763502"
+      #ENV['FB_APP_SECRET'] = "e2941a79f5beeab87d81abb9a2489996"
+
+      #ENV['TW_APP_ID'] = "d8fhQkymOTmCYnpasZvOM1qbq"
+      #ENV['TW_APP_SECRET'] = "tBwlj2YVQFk4nQPrCwMgHt5ffKPelhOdZRPDrMYZL7msBfZZsc"
+
+
       provider :facebook, ENV['FB_APP_ID'],ENV['FB_APP_SECRET'], :scope => SCOPE
 
       provider :twitter, ENV['TW_APP_ID'], ENV['TW_APP_SECRET']
+    end
+
+    before do
+      @css = ["/css/bootstrap.min.css", "/css/main.css"]
     end
 
     get '/facebook' do
@@ -65,6 +80,27 @@ class App < Sinatra::Base
       session[:image]= info["info"]["image"]
       session[info["provider"]] = true
 
+      row = User.find_by(info["provider"], info["uid"])
+
+      if row == nil
+        users = User.new
+        users.name = info["info"]["name"]
+
+        case info["provider"]
+        when "twitter"
+          users.twitter = info["uid"]
+        when "facebook"
+          users.facebook = info["uid"]
+        end
+
+        users.save
+
+        row = User.find_by_sql(['SELECT LAST_INSERT_ID() AS id'])
+
+      end
+
+      # IDを取得
+      session[:id] = row[:id]
 
       redirect '/'
     end
@@ -76,9 +112,8 @@ class App < Sinatra::Base
 		end
 
     get '/place/' do
-        p "testtesttest"
-        p session[:user_name]
-        erb :place
+      @css.push "/css/map.css"
+      erb :place
     end
 
     get '/db_test/' do
@@ -107,5 +142,17 @@ class App < Sinatra::Base
     get '/:path' do
 	      path = params[:path]
 		    erb path.intern
+    end
+
+    post '/register_state' do
+      message = @params[:message]
+
+      posts = Posts.new
+
+#      posts.user_id = session[:id]
+#      posts.message = message
+
+#      posts.save
+
     end
 end
