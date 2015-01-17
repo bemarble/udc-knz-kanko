@@ -29,9 +29,10 @@ ActiveRecord::Schema.define(version: 20150110174515) do
   create_table "users", force: true do |t|
     t.string   "name"
     t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "twitter"
     t.string   "facebook"
-    t.datetime "updated_at"
+    t.string   "none"
   end
 
   add_index "users", ["facebook"], name: "index_users_on_facebook", using: :btree
