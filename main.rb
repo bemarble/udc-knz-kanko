@@ -27,10 +27,7 @@ class App < Sinatra::Base
 
     SCOPE = 'email,read_stream'
 
-    require 'socket'
-    p Socket.gethostname
-
-    if Socket.gethostname == "udc-knz-kanko.herokuapp.com"
+    if ENV['RACK_ENV'] == "production"
       # production
       ENV['FB_APP_ID'] = "806086352763502"
       ENV['FB_APP_SECRET'] = "e2941a79f5beeab87d81abb9a2489996"
