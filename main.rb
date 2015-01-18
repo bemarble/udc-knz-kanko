@@ -8,6 +8,9 @@ require './model.rb'
 class User < ActiveRecord::Base
 end
 
+class Post < ActiveRecord::Base
+end
+
 require 'omniauth'
 require 'omniauth-facebook'
 require 'omniauth-twitter'
@@ -127,7 +130,36 @@ class App < Sinatra::Base
 
   get '/geo/' do
     # 座標を読み込むAPI
+    #erb :geo, :layout => false
+
+    @data = {
+      :type => "FeatureCollection",
+      :features => []
+    }
+
+    list = Post.order("created_at DESC").limit(10).map do |row|
+      record = {
+        :type => "Feature",
+        :properties => {
+          :description => row.message,
+          :id => row.user_id,
+          :updated_at => row.updated_at.strftime("%Y年 %m月%d日 %H:%M")
+        },
+        :geometry => {
+          :type => "Point",
+          :icon =>  "/img/icon.gif",
+          :coordinates => [
+            row.longitude,
+            row.latitude
+          ]
+        }
+      }
+      @data[:features].push(record)
+
+    end
+
     erb :geo, :layout => false
+
   end
 
   get '/login/' do
@@ -148,14 +180,15 @@ class App < Sinatra::Base
   end
 
   post '/register_state' do
-    message = @params[:message]
+    message =
 
-    posts = Posts.new
+    posts = Post.new
 
-    #      posts.user_id = session[:id]
-    #      posts.message = message
-
-    #      posts.save
+    posts.user_id = session[:id]
+    posts.message = @params[:message]
+    posts.latitude = @params[:lat]
+    posts.longitude = @params[:lng]
+    posts.save
 
   end
 end

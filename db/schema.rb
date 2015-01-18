@@ -21,7 +21,10 @@ ActiveRecord::Schema.define(version: 20150110174515) do
 
   create_table "posts", force: true do |t|
     t.integer  "user_id"
+    t.integer  "post_type",             default: 1
     t.text     "message"
+    t.float    "latitude",   limit: 24
+    t.float    "longitude",  limit: 24
     t.datetime "created_at"
     t.datetime "updated_at"
   end
