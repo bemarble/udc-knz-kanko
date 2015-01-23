@@ -11,29 +11,34 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150111070115) do
+ActiveRecord::Schema.define(version: 20150110174515) do
 
-  create_table "opendatas", force: :cascade do |t|
-    t.integer  "open_id",    limit: 4
+  create_table "opendatas", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "posts", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "post_type",             default: 1
+    t.text     "message"
     t.float    "latitude",   limit: 24
     t.float    "longitude",  limit: 24
-    t.string   "name",       limit: 255
-    t.string   "desc",       limit: 255
-    t.string   "tel",        limit: 255
-    t.string   "url",        limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "users", force: :cascade do |t|
-    t.string   "name",       limit: 255
+  create_table "users", force: true do |t|
+    t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "twitter",    limit: 255
-    t.string   "facebook",   limit: 255
-    t.string   "none",       limit: 255
-    t.string   "want2go",    limit: 255
-    t.integer  "helpme",     limit: 4
+    t.string   "twitter"
+    t.string   "facebook"
+    t.string   "none"
   end
+
+  add_index "users", ["facebook"], name: "index_users_on_facebook", using: :btree
+  add_index "users", ["twitter"], name: "index_users_on_twitter", using: :btree
 
 end
