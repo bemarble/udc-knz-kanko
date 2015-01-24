@@ -63,6 +63,7 @@ function initialize()
   map = new google.maps.Map(document.getElementById("map-container"), opts);
   setMyPoint();
   mapRefresh();
+  mapRefresh4odata();
 }
 
 function setMyPoint()
@@ -84,6 +85,7 @@ function setMyPoint()
 }
 
 function mapRefresh() {
+
   $.getJSON('/geo/', function (data) {
     for (var i = 0; i < features.length; i++) {
       map.data.remove(features[i]);
@@ -129,6 +131,38 @@ function mapRefresh() {
     var date = event.feature.getProperty("updated_at");
 
     infowindow.setContent("<div style='width:150px; text-align: center;'><div>"+description + "</div><div>" +date +"</div></div>");
+    infowindow.setPosition(event.feature.getGeometry().get());
+    infowindow.setOptions({pixelOffset: new google.maps.Size(0,-30)});
+    infowindow.open(map);
+  });
+}
+
+function mapRefresh4odata() {
+
+  $.getJSON('/opendata/', function (data) {
+    for (var i = 0; i < features.length; i++) {
+      map.data.remove(features[i]);
+    }
+
+    features = map.data.addGeoJson(data);
+  });
+
+  map.data.setStyle(function(feature) {
+    var theaterName = feature.getProperty('name');
+    return {
+      icon: {url: "/img/go.png" },
+      visible: true,
+      clickable: true,
+      title: theaterName
+    };
+  });
+
+  map.data.addListener('addfeature', function(event) {
+    var infowindow = new google.maps.InfoWindow();
+    var description = event.feature.getProperty("description");
+    var date = event.feature.getProperty("updated_at");
+
+    infowindow.setContent("<div style='width:100px; text-align: center;'><div>"+description + "</div></div>");
     infowindow.setPosition(event.feature.getGeometry().get());
     infowindow.setOptions({pixelOffset: new google.maps.Size(0,-30)});
     infowindow.open(map);

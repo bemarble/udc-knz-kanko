@@ -1,4 +1,7 @@
 # coding: utf-8
+require 'sinatra/activerecord'
+require 'sinatra/activerecord/rake'
+require './models/opendatas.rb'
 
 # import sinatra-rake
 require 'sinatra/activerecord/rake'
