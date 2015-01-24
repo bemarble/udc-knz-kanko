@@ -44,7 +44,8 @@ function initialize()
 
   map = new google.maps.Map(document.getElementById("map-container"), opts);
   setMyPoint();
-  mapRefresh();
+  mapRefresh('/geo/');
+  mapRefresh('/opendata/');
 }
 
 function setMyPoint()
@@ -65,8 +66,9 @@ function setMyPoint()
   }
 }
 
-function mapRefresh() {
-  $.getJSON('/geo/', function (data) {
+function mapRefresh(api_uri) {
+
+  $.getJSON(api_uri, function (data) {
     for (var i = 0; i < features.length; i++) {
       map.data.remove(features[i]);
     }
