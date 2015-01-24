@@ -1,0 +1,22 @@
+
+#map-container { height: 100% }
+
+.screen {
+  height: 100%
+
+}
+
+.overlay {
+  position: absolute;
+  top: 0px;
+
+  text-align: right;
+  width: 85%;
+}
+
+.add-btn {
+  width: 15%;
+  height: 15%;
+  position: fixed;
+  bottom: 0;
+}
