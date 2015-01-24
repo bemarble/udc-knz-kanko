@@ -14,7 +14,13 @@
 ActiveRecord::Schema.define(version: 20150110174515) do
 
   create_table "opendatas", force: true do |t|
+    t.integer  "open_id"
     t.string   "name"
+    t.string   "desc"
+    t.float    "latitude",   limit: 24
+    t.float    "longitude",  limit: 24
+    t.string   "tel"
+    t.string   "url"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
