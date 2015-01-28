@@ -172,9 +172,10 @@ function mapRefresh4odata() {
   map.data.addListener('addfeature', function(event) {
     var infowindow = new google.maps.InfoWindow();
     var description = event.feature.getProperty("description");
+    var open_id = event.feature.getProperty("id");
     var date = event.feature.getProperty("updated_at");
 
-    infowindow.setContent("<div style='width:100px; text-align: center;'><div>"+description + "</div></div>");
+    infowindow.setContent("<div style='width:100px; text-align: center;'><div>"+description+"</div><img src='/img/thumb/"+open_id+".jpg' /></div>");
     infowindow.setPosition(event.feature.getGeometry().get());
     infowindow.setOptions({pixelOffset: new google.maps.Size(0,-30)});
     infowindow.open(map);
