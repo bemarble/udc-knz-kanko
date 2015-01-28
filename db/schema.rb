@@ -11,37 +11,38 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150110174515) do
+ActiveRecord::Schema.define(version: 20150129010910) do
 
-  create_table "opendatas", force: true do |t|
-    t.integer  "open_id"
-    t.string   "name"
-    t.string   "desc"
+  create_table "opendatas", force: :cascade do |t|
+    t.integer  "open_id",    limit: 4
     t.float    "latitude",   limit: 24
     t.float    "longitude",  limit: 24
-    t.string   "tel"
-    t.string   "url"
+    t.string   "name",       limit: 255
+    t.string   "desc",       limit: 255
+    t.string   "tel",        limit: 255
+    t.string   "url",        limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "posts", force: true do |t|
-    t.integer  "user_id"
-    t.integer  "post_type",             default: 1
-    t.text     "message"
+  create_table "posts", force: :cascade do |t|
+    t.integer  "user_id",    limit: 4
+    t.text     "message",    limit: 65535
     t.float    "latitude",   limit: 24
     t.float    "longitude",  limit: 24
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "help",       limit: 4,     default: 0
+    t.integer  "open_id",    limit: 4
   end
 
-  create_table "users", force: true do |t|
-    t.string   "name"
+  create_table "users", force: :cascade do |t|
+    t.string   "name",       limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "twitter"
-    t.string   "facebook"
-    t.string   "none"
+    t.string   "twitter",    limit: 255
+    t.string   "facebook",   limit: 255
+    t.string   "none",       limit: 255
   end
 
   add_index "users", ["facebook"], name: "index_users_on_facebook", using: :btree

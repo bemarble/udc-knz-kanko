@@ -16,23 +16,25 @@
       </div>
       <div class="modal-body">
 
-
         <div class="form-group">
-          <p class="control-label"><b>状況</b></p>
-          <div class="radio-inline">
-            <input type="radio" value="1" name="gender" id="man">
-            <label for="want">行きたい</label>
-          </div>
-          <div class="radio-inline">
-            <input type="radio" value="2" name="gender" id="woman">
-            <label for="go">行こう</label>
-          </div>
+          <label for="message-text" class="control-label">どこに行きますか？</label>
+          <select class="selectpicker">
+            <option value="0">選択してください</option>
+            <%
+            @places.map do |row|
+            %>
+            <option value="<%= row[:open_id] %>"><%= row[:name] %></option>
+            <%
+            end
+            %>
+          </select>
         </div>
 
+        <br>
         <div class="form-group">
-          <p class="control-label"><b>メッセージ</b></p>
+          <p class="control-label"><b>お困りですか？</b></p>
           <div class="col-sm-10">
-            <input id="mail-body" type="text" class="form-control" placeholder="どうしましたか？">
+            <input type="checkbox" name="help-switch" checked data-size="small" id="help">
           </div>
         </div>
       </div>
@@ -77,4 +79,6 @@
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="//maps.google.com/maps/api/js?sensor=false" type="text/javascript"></script>
 <script src="/js/bootstrap.min.js"></script>
+<script src="/js/bootstrap-switch.min.js"></script>
+<script src="/js/bootstrap-select.min.js"></script>
 <script type="text/javascript" src="/js/map.js"></script>

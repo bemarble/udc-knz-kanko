@@ -16,11 +16,21 @@ $('document').ready(function(){
   });
 
   $('#register_state').on('click', function() {
+    if ($(".selectpicker").val() == "0") {
+      alert("場所を入力してください");
+      return false;
+    }
+
+    if (!mylatlng) {
+      alert("GPSを有効にしてください");
+      return false;
+    }
     $.ajax({
       type: 'post',
       url: '/register_state',
       data: {
-        'message': $('#message').val(),
+        'help': $('#help').bootstrapSwitch('state'),
+        'open_id': $(".selectpicker").val(),
         'lat': mylatlng.lat(),
         'lng' : mylatlng.lng()
       },
@@ -48,6 +58,8 @@ $('document').ready(function(){
     });
   });
 
+
+  $("#help").bootstrapSwitch();
 
 });
 
@@ -97,7 +109,7 @@ function mapRefresh() {
   map.data.setStyle(function(feature) {
     var theaterName = feature.getProperty('name');
     return {
-      icon: {url: "/img/icon.gif" },
+      icon: {url: "/img/help.png"  },
       visible: true,
       clickable: true,
       title: theaterName
@@ -150,7 +162,7 @@ function mapRefresh4odata() {
   map.data.setStyle(function(feature) {
     var theaterName = feature.getProperty('name');
     return {
-      icon: {url: "/img/go.png" },
+      icon: {url: "/img/help.png" },
       visible: true,
       clickable: true,
       title: theaterName

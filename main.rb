@@ -129,7 +129,12 @@ class App < Sinatra::Base
   end
 
   get '/place/' do
+
+    @places = Opendatas.select("open_id,name").order("open_id ASC")
+
     @css.push "/css/map.css"
+    @css.push "/css/bootstrap-switch.min.css"
+    @css.push "/css/bootstrap-select.min.css"
     erb :place
   end
 
@@ -148,17 +153,19 @@ class App < Sinatra::Base
       :features => []
     }
 
-    list = Post.find_by_sql(['SELECT * FROM posts AS p WHERE updated_at = (SELECT MAX(updated_at) FROM posts as s WHERE p.user_id=s.user_id) LIMIT 10']).map do |row|
+    list = Post.find_by_sql(['SELECT p.*,o.name AS place FROM posts AS p,opendatas AS o WHERE o.open_id=p.open_id AND p.updated_at = (SELECT MAX(updated_at) FROM posts as s WHERE p.user_id=s.user_id OR s.user_id IS NULL) LIMIT 10']).map do |row|
       record = {
         :type => "Feature",
         :properties => {
           :description => row.message,
-          :id => row.user_id,
-          :updated_at => row.updated_at.strftime("%Y年 %m月%d日 %H:%M")
+          :want_to_go => row.place,
+          :id => row.user_id == nil ? '' : row.user_id,
+          :updated_at => row.updated_at.strftime("%Y年 %m月%d日 %H:%M"),
+          :icon =>  row[:help] == 1 ? "/img/help.png" : "/img/go.png",
         },
         :geometry => {
+          :icon =>  row[:help] == 1 ? "/img/help.png" : "/img/go.png",
           :type => "Point",
-          :icon =>  "/img/icon.gif",
           :coordinates => [
             row.longitude,
             row.latitude
@@ -209,7 +216,8 @@ class App < Sinatra::Base
     posts.message = @params[:message]
     posts.latitude = @params[:lat]
     posts.longitude = @params[:lng]
-
+    posts.help = @params[:help] == "true" ? 1 : 0
+    posts.open_id = @params[:open_id]
 
     posts.save
   end
