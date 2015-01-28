@@ -29,15 +29,33 @@ $('document').ready(function(){
         console.log("reg");
       }
     });
-
   });
+
+  $('#send_message').on('click', function() {
+
+    console.log($('#to-id').val());
+    $.ajax({
+      type: 'post',
+      url: '/send_message',
+      data: {
+        'message': $('mail-body').val(),
+        'to': 1,
+
+      },
+      success: function() {
+
+      }
+    });
+  });
+
+
 });
 
 function initialize()
 {
   var tokyo = new google.maps.LatLng(35.689614,139.691585);
   var opts = {
-    zoom: 13,
+    zoom: 16,
     center: tokyo,
     mapTypeId: google.maps.MapTypeId.ROADMAP
   };
@@ -84,6 +102,27 @@ function mapRefresh() {
       clickable: true,
       title: theaterName
     };
+  });
+
+  map.data.addListener('click', function(event){
+    // show user info
+
+    $.ajax({
+      type: 'post',
+      url: '/user/',
+      dataType: 'json',
+      data: {
+        id:event.feature.getProperty("id")
+      },
+      success: function(data) {
+        console.log(data.name);
+      }
+    });
+    $('#user-info').modal();
+    $('#user-info').modal({ keyboard: false });
+    $('#user-info').modal('show');
+
+    $('#to-id').val();
   });
 
   map.data.addListener('addfeature', function(event) {

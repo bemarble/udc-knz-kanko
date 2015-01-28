@@ -15,7 +15,11 @@ end
 class Post < ActiveRecord::Base
 end
 
+class Message  < ActiveRecord::Base
+
+end
 class Opendatas < ActiveRecord::Base
+
 end
 
 require 'omniauth'
@@ -144,7 +148,7 @@ class App < Sinatra::Base
       :features => []
     }
 
-    list = Post.order("created_at DESC").limit(10).map do |row|
+    list = Post.find_by_sql(['SELECT * FROM posts AS p WHERE updated_at = (SELECT MAX(updated_at) FROM posts as s WHERE p.user_id=s.user_id) LIMIT 10']).map do |row|
       record = {
         :type => "Feature",
         :properties => {
@@ -169,11 +173,22 @@ class App < Sinatra::Base
 
   end
 
+  post '/user/' do
+
+    if @params[:id]
+      id = @params[:id]
+      row = User.find(id)
+    else
+      row = {}
+    end
+    row.to_json
+  end
+
   get '/login/' do
     erb :login
   end
 
-  get '/my' do
+  get '/me' do
 
     @user = session
 
@@ -187,7 +202,6 @@ class App < Sinatra::Base
   end
 
   post '/register_state' do
-    message =
 
     posts = Post.new
 
@@ -195,8 +209,9 @@ class App < Sinatra::Base
     posts.message = @params[:message]
     posts.latitude = @params[:lat]
     posts.longitude = @params[:lng]
-    posts.save
 
+
+    posts.save
   end
 
   get '/opendata/' do
