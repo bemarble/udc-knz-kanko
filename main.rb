@@ -138,7 +138,7 @@ class App < Sinatra::Base
   end
 
   get '/kml/post.kml' do
-    content_type "text/plain"
+    content_type "text/xml"
 
     @data = {
       :type => "FeatureCollection",
@@ -235,8 +235,8 @@ class App < Sinatra::Base
   end
 
   get '/kml/opendata.kml' do
-    content_type "text/plain"
-    
+    content_type "text/xml"
+
     @list = Opendatas.order("open_id ASC")
 
     erb :opendata, :layout => false

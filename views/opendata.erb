@@ -15,7 +15,9 @@
 <Point>
 <coordinates><%= row[:longitude]%>,<%= row[:latitude] %></coordinates>
 </Point>
-<description><%= row[:desc]%></description>
+<description><![CDATA[
+<div style='width:100px; text-align: center;'><div><%= row[:desc]%></div><img src='/img/thumb/<%= row[:open_id]%>.jpg' /></div>
+]]></description>
 </Placemark>
 
 <% end %>

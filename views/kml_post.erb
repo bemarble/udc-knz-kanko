@@ -22,7 +22,11 @@
 <Point>
 <coordinates><%= row[:longitude]%>,<%= row[:latitude] %></coordinates>
 </Point>
-<description><%= row[:want_to_go]%></description>
+
+<description><![CDATA[
+<div style='width:100px; text-align: center;'><div><%= row[:place]%>に行きたい</div><div><%= row[:updated_at]%></div></div>
+]]></description>
+
 </Placemark>
 
 <% end %>

@@ -99,8 +99,7 @@ function setMyPoint()
 
 function mapRefresh() {
   var ctime = (new Date()).getTime();
-
-  var myKMLLayer = new google.maps.KmlLayer("http://dl.dropboxusercontent.com/u/20852942/kml_post.kml?" + ctime);
+  var myKMLLayer = new google.maps.KmlLayer("http://udc-knz-kanko.herokuapp.com/kml/post.kml?" + ctime);
   myKMLLayer.setMap(map);
 
 /*
@@ -159,9 +158,9 @@ function mapRefresh() {
 function mapRefresh4odata() {
   var ctime = (new Date()).getTime();
 
-  var myKMLLayer = new google.maps.KmlLayer("http://dl.dropboxusercontent.com/u/20852942/kml_post.kml?" + ctime);
+  var myKMLLayer = new google.maps.KmlLayer("http://udc-knz-kanko.herokuapp.com/kml/opendata.kml?" + ctime);
   myKMLLayer.setMap(map);
-  
+
 /*
   $.getJSON('/opendata/', function (data) {
     for (var i = 0; i < features.length; i++) {
