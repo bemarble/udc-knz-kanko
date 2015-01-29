@@ -73,6 +73,7 @@ function initialize()
   };
 
   map = new google.maps.Map(document.getElementById("map-container"), opts);
+
   setMyPoint();
   mapRefresh();
   mapRefresh4odata();
@@ -97,7 +98,12 @@ function setMyPoint()
 }
 
 function mapRefresh() {
+  var ctime = (new Date()).getTime();
 
+  var myKMLLayer = new google.maps.KmlLayer("http://dl.dropboxusercontent.com/u/20852942/kml_post.kml?" + ctime);
+  myKMLLayer.setMap(map);
+
+/*
   $.getJSON('/geo/', function (data) {
     for (var i = 0; i < features.length; i++) {
       map.data.remove(features[i]);
@@ -107,9 +113,9 @@ function mapRefresh() {
   });
 
   map.data.setStyle(function(feature) {
-    var theaterName = feature.getProperty('name');
+    var theaterName = feature.getProperty('want_to_go');
     return {
-      icon: {url: "/img/help.png"  },
+      icon: {url: feature.getProperty('icon')},
       visible: true,
       clickable: true,
       title: theaterName
@@ -139,7 +145,7 @@ function mapRefresh() {
 
   map.data.addListener('addfeature', function(event) {
     var infowindow = new google.maps.InfoWindow();
-    var description = event.feature.getProperty("description");
+    var description = event.feature.getProperty("want_to_go");
     var date = event.feature.getProperty("updated_at");
 
     infowindow.setContent("<div style='width:150px; text-align: center;'><div>"+description + "</div><div>" +date +"</div></div>");
@@ -147,10 +153,16 @@ function mapRefresh() {
     infowindow.setOptions({pixelOffset: new google.maps.Size(0,-30)});
     infowindow.open(map);
   });
+  */
 }
 
 function mapRefresh4odata() {
+  var ctime = (new Date()).getTime();
 
+  var myKMLLayer = new google.maps.KmlLayer("http://dl.dropboxusercontent.com/u/20852942/kml_post.kml?" + ctime);
+  myKMLLayer.setMap(map);
+  
+/*
   $.getJSON('/opendata/', function (data) {
     for (var i = 0; i < features.length; i++) {
       map.data.remove(features[i]);
@@ -162,14 +174,14 @@ function mapRefresh4odata() {
   map.data.setStyle(function(feature) {
     var theaterName = feature.getProperty('name');
     return {
-      icon: {url: "/img/help.png" },
+      icon: {url: "/img/favicon.ico" },
       visible: true,
       clickable: true,
       title: theaterName
     };
   });
 
-  map.data.addListener('addfeature', function(event) {
+  map.data.addListener('click', function(event) {
     var infowindow = new google.maps.InfoWindow();
     var description = event.feature.getProperty("description");
     var open_id = event.feature.getProperty("id");
@@ -180,4 +192,5 @@ function mapRefresh4odata() {
     infowindow.setOptions({pixelOffset: new google.maps.Size(0,-30)});
     infowindow.open(map);
   });
+*/
 }

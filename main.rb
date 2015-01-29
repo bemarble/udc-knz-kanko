@@ -67,6 +67,11 @@ class App < Sinatra::Base
     @css = ["/css/bootstrap.min.css", "/css/main.css"]
   end
 
+  get '/' do
+
+    erb :index
+  end
+
   get '/facebook' do
     if session[:facebook] == nil
       redirect '/auth/facebook'
@@ -122,12 +127,6 @@ class App < Sinatra::Base
     redirect '/'
   end
 
-
-  get '/' do
-
-    erb :index
-  end
-
   get '/place/' do
 
     @places = Opendatas.select("open_id,name").order("open_id ASC")
@@ -136,6 +135,19 @@ class App < Sinatra::Base
     @css.push "/css/bootstrap-switch.min.css"
     @css.push "/css/bootstrap-select.min.css"
     erb :place
+  end
+
+  get '/kml/post.kml' do
+    content_type "text/plain"
+
+    @data = {
+      :type => "FeatureCollection",
+      :features => []
+    }
+
+    @list = Post.find_by_sql(['SELECT p.*,o.name AS place FROM posts AS p,opendatas AS o WHERE o.open_id=p.open_id AND p.updated_at = (SELECT MAX(updated_at) FROM posts as s WHERE p.user_id=s.user_id OR s.user_id IS NULL) LIMIT 10'])
+
+    erb :kml_post, :layout => false
   end
 
   get '/db_test/' do
@@ -222,6 +234,14 @@ class App < Sinatra::Base
     posts.save
   end
 
+  get '/kml/opendata.kml' do
+    content_type "text/plain"
+    
+    @list = Opendatas.order("open_id ASC")
+
+    erb :opendata, :layout => false
+
+  end
   get '/opendata/' do
     # 座標を読み込むAPI
     #erb :geo, :layout => false
@@ -231,7 +251,7 @@ class App < Sinatra::Base
       :features => []
     }
 
-    list = Opendatas.order("open_id ASC").map do |row|
+    Opendatas.order("open_id ASC").map do |row|
       record = {
         :type => "Feature",
         :properties => {

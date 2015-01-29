@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+<Document>
+    <!-- スタイルを定義 -->
+    <Style id="Help">
+      <IconStyle>
+        <Icon><href>http://dl.dropboxusercontent.com/u/20852942/help.png</href></Icon>
+      </IconStyle>
+    </Style>
+
+    <Style id="Go">
+    <IconStyle>
+    <Icon><href>http://dl.dropboxusercontent.com/u/20852942/go.png</href></Icon>
+    </IconStyle>
+    </Style>
+
+<% @list.each do |row| %>
+
+<Placemark>
+<name><%= row[:place] %></name>
+<styleUrl><%= row[:help] == 1 ? "#Help" : "#GO" %></styleUrl>
+<Point>
+<coordinates><%= row[:longitude]%>,<%= row[:latitude] %></coordinates>
+</Point>
+<description><%= row[:want_to_go]%></description>
+</Placemark>
+
+<% end %>
+</Document>
+</kml>

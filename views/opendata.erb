@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+<Document>
+    <!-- スタイルを定義 -->
+    <Style id="Place">
+      <IconStyle>
+        <Icon><href>https://dl.dropboxusercontent.com/u/20852942/favicon.ico</href></Icon>
+      </IconStyle>
+    </Style>
+<% @list.each do |row| %>
+
+<Placemark>
+<name><%= row[:name] %></name>
+<styleUrl>#Place</styleUrl>
+<Point>
+<coordinates><%= row[:longitude]%>,<%= row[:latitude] %></coordinates>
+</Point>
+<description><%= row[:desc]%></description>
+</Placemark>
+
+<% end %>
+</Document>
+</kml>
