@@ -338,6 +338,8 @@ class App < Sinatra::Base
         row_count = row_count+1
       end
 
+      Opendatas.connection.execute("TRUNCATE TABLE opendatas")
+
       save_count = 0
       for save_row in @save_data do
 
@@ -345,6 +347,10 @@ class App < Sinatra::Base
 
         if odata == nil
           odata = Opendatas.new
+        end
+
+        if save_row[:openid] == nil
+          next;
         end
 
         odata.open_id = save_row[:openid]
