@@ -43,29 +43,17 @@ class App < Sinatra::Base
     SCOPE = 'email,read_stream'
 
     if ENV['RACK_ENV'] == "production"
-
-      # PRODUCTIONのSECRET KEYを使う
       key = SECRET[:PRODUCTION]
-
-      # production
-      ENV['FB_APP_ID'] = key[:FB_APP_ID]
-      ENV['FB_APP_SECRET'] = key[:FB_APP_SECRET]
-
-      ENV['TW_APP_ID'] = key[:TW_APP_ID]
-      ENV['TW_APP_SECRET'] = key[:TW_APP_SECRET]
     else
-
-      # PRODUCTIONのSECRET KEYを使う
       key = SECRET[:DEVELOP]
-
-      # develop
-      ENV['FB_APP_ID'] = key[:FB_APP_ID]
-      ENV['FB_APP_SECRET'] = key[:FB_APP_SECRET]
-
-      ENV['TW_APP_ID'] = key[:TW_APP_ID]
-      ENV['TW_APP_SECRET'] = key[:TW_APP_SECRET]
-
     end
+
+    # 環境変数が読めなければファイルのものを使う
+    ENV['FB_APP_ID'] = ENV['FB_APP_ID'] || key[:FB_APP_ID]
+    ENV['FB_APP_SECRET'] = ENV['FB_APP_SECRET'] || key[:FB_APP_SECRET]
+
+    ENV['TW_APP_ID'] = ENV['TW_APP_ID'] || key[:TW_APP_ID]
+    ENV['TW_APP_SECRET'] = ENV['TW_APP_SECRET'] || key[:TW_APP_SECRET]
 
     provider :facebook, ENV['FB_APP_ID'],ENV['FB_APP_SECRET'], :scope => SCOPE
 
