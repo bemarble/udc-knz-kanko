@@ -43,8 +43,8 @@ class App < Sinatra::Base
 
     if ENV['RACK_ENV'] == "production"
       # production
-      ENV['FB_APP_ID'] = "806086352763502"
-      ENV['FB_APP_SECRET'] = "e2941a79f5beeab87d81abb9a2489996"
+      ENV['FB_APP_ID'] = "764042903634514"
+      ENV['FB_APP_SECRET'] = "4e1480317e21cec0b0d3ef04390576bf"
 
       ENV['TW_APP_ID'] = "d8fhQkymOTmCYnpasZvOM1qbq"
       ENV['TW_APP_SECRET'] = "tBwlj2YVQFk4nQPrCwMgHt5ffKPelhOdZRPDrMYZL7msBfZZsc"
@@ -117,7 +117,7 @@ class App < Sinatra::Base
 
       users.save
 
-      row = User.find_by_sql(['SELECT LAST_INSERT_ID() AS id'])
+      row = User.find_by_sql(['SELECT LAST_INSERT_ID() AS id']).first
 
     end
 
@@ -338,6 +338,8 @@ class App < Sinatra::Base
         row_count = row_count+1
       end
 
+      Opendatas.connection.execute("TRUNCATE TABLE opendatas")
+
       save_count = 0
       for save_row in @save_data do
 
@@ -345,6 +347,10 @@ class App < Sinatra::Base
 
         if odata == nil
           odata = Opendatas.new
+        end
+
+        if save_row[:openid] == nil
+          next;
         end
 
         odata.open_id = save_row[:openid]
