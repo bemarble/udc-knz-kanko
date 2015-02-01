@@ -8,7 +8,11 @@ require './model.rb'
 # require './impdata.rb'
 require 'faraday'
 require 'kconv'
-require_relative 'config/secretkeys.rb'
+if File.exist? 'conig/secretkeys.rb'
+  require_relative 'config/secretkeys.rb'
+else
+  SECRET = {}
+end
 
 class User < ActiveRecord::Base
 end
@@ -42,18 +46,24 @@ class App < Sinatra::Base
 
     SCOPE = 'email,read_stream'
 
+    # 環境に応じて使うkeyを決定
     if ENV['RACK_ENV'] == "production"
       key = SECRET[:PRODUCTION]
     else
       key = SECRET[:DEVELOP]
     end
 
-    # 環境変数が読めなければファイルのものを使う
-    ENV['FB_APP_ID'] = ENV['FB_APP_ID'] || key[:FB_APP_ID]
-    ENV['FB_APP_SECRET'] = ENV['FB_APP_SECRET'] || key[:FB_APP_SECRET]
+    # keyがnilの場合、ファイル読み込みモードではなく、ENVモードである
+    if key.nil?
+      key = {}
+    end
 
-    ENV['TW_APP_ID'] = ENV['TW_APP_ID'] || key[:TW_APP_ID]
-    ENV['TW_APP_SECRET'] = ENV['TW_APP_SECRET'] || key[:TW_APP_SECRET]
+    # 環境変数が読めなければファイルのものを使う
+    ENV['FB_APP_ID'] = ENV['FB_APP_ID'] || key[:FB_APP_ID] || nil
+    ENV['FB_APP_SECRET'] = ENV['FB_APP_SECRET'] || key[:FB_APP_SECRET] || nil
+
+    ENV['TW_APP_ID'] = ENV['TW_APP_ID'] || key[:TW_APP_ID] || nil
+    ENV['TW_APP_SECRET'] = ENV['TW_APP_SECRET'] || key[:TW_APP_SECRET] || nil
 
     provider :facebook, ENV['FB_APP_ID'],ENV['FB_APP_SECRET'], :scope => SCOPE
 
