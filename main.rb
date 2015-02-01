@@ -8,6 +8,7 @@ require './model.rb'
 # require './impdata.rb'
 require 'faraday'
 require 'kconv'
+require_relative 'config/secretkeys.rb'
 
 class User < ActiveRecord::Base
 end
@@ -42,21 +43,17 @@ class App < Sinatra::Base
     SCOPE = 'email,read_stream'
 
     if ENV['RACK_ENV'] == "production"
-      # production
-      ENV['FB_APP_ID'] = "764042903634514"
-      ENV['FB_APP_SECRET'] = "4e1480317e21cec0b0d3ef04390576bf"
-
-      ENV['TW_APP_ID'] = "d8fhQkymOTmCYnpasZvOM1qbq"
-      ENV['TW_APP_SECRET'] = "tBwlj2YVQFk4nQPrCwMgHt5ffKPelhOdZRPDrMYZL7msBfZZsc"
+      key = SECRET[:PRODUCTION]
     else
-      # develop
-      ENV['FB_APP_ID'] = "826355644069906"
-      ENV['FB_APP_SECRET'] = "64495b9647fa2d8a4e8aa6843ec7b803"
-
-      ENV['TW_APP_ID'] = "6RqWrX89FG44iHML0ci2eL6g3"
-      ENV['TW_APP_SECRET'] = "MR5OuYN6nFRXOeDfQa8e9ITYNfEjW32erNvRpKalsJMi1TroR0"
+      key = SECRET[:DEVELOP]
     end
 
+    # 環境変数が読めなければファイルのものを使う
+    ENV['FB_APP_ID'] = ENV['FB_APP_ID'] || key[:FB_APP_ID]
+    ENV['FB_APP_SECRET'] = ENV['FB_APP_SECRET'] || key[:FB_APP_SECRET]
+
+    ENV['TW_APP_ID'] = ENV['TW_APP_ID'] || key[:TW_APP_ID]
+    ENV['TW_APP_SECRET'] = ENV['TW_APP_SECRET'] || key[:TW_APP_SECRET]
 
     provider :facebook, ENV['FB_APP_ID'],ENV['FB_APP_SECRET'], :scope => SCOPE
 
